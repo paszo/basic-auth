@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const authController = require('../controllers/authController');
+const {requireAuth} = require('../middleware/authMiddleware');
 
 const router = Router();
 
@@ -6,17 +8,17 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/login', (req, res) => {
-    res.render('login');
-});
+router.get('/login', authController.login_get);
 
+router.get('/signup', authController.signup_get);
 
-router.get('/signup', (req, res) => {
-    res.render('signup');
-});
+router.post('/signup', authController.signup_post);
 
+router.post('/login', authController.login_post);
 
-router.get('/quotations', (req, res) => {
+router.get('/logout', authController.logout_get);
+
+router.get('/quotations', requireAuth, (req, res) => {
     res.render('quotations');
 });
 

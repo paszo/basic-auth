@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +16,8 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useCre
 
 // middleware
 app.use(express.static('public'));
+app.use(express.json());
+app.use(cookieParser());
 
 //view engine
 app.set('view engine', 'ejs');

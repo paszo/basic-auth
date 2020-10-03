@@ -1,5 +1,14 @@
 <%- include('partials/header'); -%>
 
-<p>Login stuff here </p>
+<form>
+    <h2>Log in</h2>
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email" autocomplete="email" />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" autocomplete="current-password" />
+    <button>Log in</button>
+</form>
+
+<script src="js/login.js"></script>
 
 <%- include('partials/footer'); -%>
