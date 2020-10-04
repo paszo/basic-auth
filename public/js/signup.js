@@ -1,4 +1,6 @@
 const form = document.querySelector('form');
+const emailError = document.querySelector('.email.error');
+const passwordError = document.querySelector('.password.error');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -13,10 +15,11 @@ form.addEventListener('submit', async (e) => {
             headers: {'Content-Type': 'application/json'}
         });
         const data = await res.json();
-        console.log(data);
         if (data.errors) {
-            console.log('some errors happened');
-        } else {
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+        }
+        if (data.user) {
             location.assign('/');
         }
     }

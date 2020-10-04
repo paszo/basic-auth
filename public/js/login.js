@@ -1,8 +1,13 @@
 const form = document.querySelector('form');
+const loginError = document.querySelector('.login.error');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // reset errors
+    loginError.textContent = '';
+
+    // get the values
     const email = form.email.value;
     const password = form.password.value;
 
@@ -13,9 +18,8 @@ form.addEventListener('submit', async (e) => {
             headers: {'Content-Type': 'application/json'}
         });
         const data = await res.json();
-        console.log(data);
         if(data.errors){
-            console.log('wrong password or email');
+            loginError.textContent = data.errors.login;
         }
         if(data.user) {
             location.assign('/');

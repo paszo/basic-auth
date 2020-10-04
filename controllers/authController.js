@@ -5,8 +5,28 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const maxAge = 3 * 24 * 60 * 60;
 
 const handleErrors = (err) => {
-    let errors = {email: '', password: ''};
+    let errors = {email: '', password: '', login: ''};
     console.log(err);
+
+    // login errors
+    if((err.message === 'incorrect email') || (err.message === 'incorrect password')) {
+        errors.login = 'that email or password is not correct';
+    }
+
+    // signup errors
+    // duplicate error code
+    if(err.code === 11000) {
+        errors.email = 'that email is already registered';
+        return errors;
+    }
+
+    // validation errors
+    if (err.message.includes('user validation failed')){
+        Object.values(err.errors).forEach(({properties}) => {
+            errors[properties.path] = properties.message;
+        })
+    }
+
     return errors;
 };
 
